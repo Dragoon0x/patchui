@@ -22,8 +22,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/0xDragoon/patchui"
+    "url": "https://github.com/dragoon0x/patchui"
   },
+  "homepage": "https://dragoon0x.github.io/patchui/",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
