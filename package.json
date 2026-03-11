@@ -1,0 +1,71 @@
+{
+  "name": "patchui",
+  "version": "0.1.0",
+  "description": "Modular parameter controls for React. Rotary knobs, toggles, color wells, scene morphing, and parameter linking — wired directly to your UI values.",
+  "author": "0xDragoon",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "controls",
+    "parameters",
+    "knobs",
+    "sliders",
+    "ui",
+    "devtools",
+    "tweaking",
+    "design",
+    "animation",
+    "motion",
+    "spring",
+    "gui",
+    "panel"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xDragoon/patchui"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0"
+  }
+}

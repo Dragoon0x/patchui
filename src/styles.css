@@ -1,0 +1,659 @@
+/* ═══════════════════════════════════════════════════
+   PATCH — Stylesheet
+   Import: import 'patchui/styles.css'
+   ═══════════════════════════════════════════════════ */
+
+/* ─── CSS Variables: Dark Theme ─── */
+.patch-panel--dark {
+  --patch-bg: #08080c;
+  --patch-bg2: #0e0e14;
+  --patch-surface: #13131a;
+  --patch-surface2: #1a1a24;
+  --patch-border: #1e1e2a;
+  --patch-border2: #2a2a3a;
+  --patch-dim: #8b8b9e;
+  --patch-text: #a0a0b4;
+  --patch-bright: #d0d0dc;
+  --patch-white: #eeeef4;
+  --patch-accent: #f59e0b;
+  --patch-accent-dim: #d49a1e;
+  --patch-accent-glow: rgba(245,158,11,.15);
+  --patch-green: #4ade80;
+  --patch-red: #f87171;
+  --patch-cyan: #22d3ee;
+  --patch-cyan-dim: #25b5cc;
+  --patch-focus: #f59e0b;
+}
+
+/* ─── CSS Variables: Light Theme ─── */
+.patch-panel--light {
+  --patch-bg: #ffffff;
+  --patch-bg2: #f8f8fa;
+  --patch-surface: #f0f0f4;
+  --patch-surface2: #e8e8ee;
+  --patch-border: #d8d8e0;
+  --patch-border2: #c8c8d0;
+  --patch-dim: #6b6b7a;
+  --patch-text: #4a4a5a;
+  --patch-bright: #2a2a3a;
+  --patch-white: #111118;
+  --patch-accent: #d97706;
+  --patch-accent-dim: #b45309;
+  --patch-accent-glow: rgba(217,119,6,.1);
+  --patch-green: #16a34a;
+  --patch-red: #dc2626;
+  --patch-cyan: #0891b2;
+  --patch-cyan-dim: #0e7490;
+  --patch-focus: #d97706;
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .patch-panel *,
+  .patch-panel *::before,
+  .patch-panel *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Global Focus ─── */
+.patch-panel *:focus-visible {
+  outline: 2px solid var(--patch-focus);
+  outline-offset: 2px;
+}
+.patch-panel *:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ════════════════════════
+   Panel Shell
+   ════════════════════════ */
+
+.patch-panel {
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--patch-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.patch-panel--closed {
+  /* Just the toggle button */
+}
+
+.patch-panel--open {
+  width: 340px;
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--patch-surface);
+  border: 1px solid var(--patch-border);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 40px rgba(0,0,0,.3);
+}
+
+/* Scrollbar */
+.patch-panel--open::-webkit-scrollbar {
+  width: 4px;
+}
+.patch-panel--open::-webkit-scrollbar-track {
+  background: transparent;
+}
+.patch-panel--open::-webkit-scrollbar-thumb {
+  background: var(--patch-border2);
+  border-radius: 2px;
+}
+
+/* ─── Toggle Button (collapsed) ─── */
+.patch-panel__toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--patch-surface);
+  border: 1px solid var(--patch-border);
+  border-radius: 10px;
+  color: var(--patch-bright);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,.2);
+}
+.patch-panel__toggle:hover {
+  border-color: var(--patch-accent);
+  box-shadow: 0 4px 20px var(--patch-accent-glow);
+}
+.patch-panel__toggle-led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--patch-green);
+  box-shadow: 0 0 6px rgba(74,222,128,.4);
+}
+
+/* ─── Header ─── */
+.patch-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--patch-border);
+  flex-shrink: 0;
+}
+.patch-panel__title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--patch-bright);
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.patch-panel__led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--patch-green);
+  box-shadow: 0 0 6px rgba(74,222,128,.4);
+}
+.patch-panel__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.patch-panel__close {
+  background: none;
+  border: 1px solid var(--patch-border);
+  border-radius: 4px;
+  color: var(--patch-dim);
+  font-size: 11px;
+  padding: 2px 6px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.patch-panel__close:hover {
+  color: var(--patch-white);
+  border-color: var(--patch-dim);
+}
+
+/* ─── Scenes ─── */
+.patch-scenes {
+  display: flex;
+  gap: 4px;
+}
+.patch-scene-btn {
+  padding: 4px 10px;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--patch-dim);
+  background: transparent;
+  border: 1px solid var(--patch-border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+.patch-scene-btn:hover {
+  border-color: var(--patch-dim);
+  color: var(--patch-bright);
+}
+.patch-scene-btn[aria-pressed="true"] {
+  background: var(--patch-accent);
+  color: var(--patch-bg);
+  border-color: var(--patch-accent);
+}
+
+/* ─── Modules container ─── */
+.patch-panel__modules {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ════════════════════════
+   Module
+   ════════════════════════ */
+
+.patch-module {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--patch-border);
+}
+.patch-module--muted {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.patch-module__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.patch-module__name {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--patch-accent-dim);
+  letter-spacing: 0.06em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.patch-module__name:hover {
+  color: var(--patch-accent);
+}
+.patch-module__chevron {
+  font-size: 10px;
+  width: 12px;
+}
+
+.patch-module__actions {
+  display: flex;
+  gap: 4px;
+}
+
+.patch-module__btn {
+  padding: 2px 8px;
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 600;
+  border-radius: 3px;
+  border: 1px solid var(--patch-border);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.05em;
+}
+.patch-module__btn--solo { color: var(--patch-cyan-dim); }
+.patch-module__btn--solo:hover,
+.patch-module__btn--solo.patch-module__btn--active,
+.patch-module__btn--solo[aria-pressed="true"] {
+  background: var(--patch-cyan);
+  color: var(--patch-bg);
+  border-color: var(--patch-cyan);
+}
+.patch-module__btn--mute { color: var(--patch-red); }
+.patch-module__btn--mute:hover,
+.patch-module__btn--mute.patch-module__btn--active,
+.patch-module__btn--mute[aria-pressed="true"] {
+  background: var(--patch-red);
+  color: var(--patch-bg);
+  border-color: var(--patch-red);
+}
+
+.patch-module__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ════════════════════════
+   Knob
+   ════════════════════════ */
+
+.patch-knob-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.patch-knob-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 56px;
+}
+
+.patch-knob-label {
+  font-size: 9px;
+  color: var(--patch-dim);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.patch-knob-value {
+  font-size: 10px;
+  color: var(--patch-bright);
+  font-weight: 500;
+  min-width: 32px;
+  text-align: center;
+}
+
+.patch-knob {
+  width: 44px;
+  height: 44px;
+  position: relative;
+  cursor: grab;
+  border-radius: 50%;
+}
+.patch-knob:active { cursor: grabbing; }
+.patch-knob:focus-visible {
+  outline: 2px solid var(--patch-focus);
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+
+.patch-knob__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--patch-border2);
+  background: radial-gradient(circle at 40% 35%, var(--patch-surface2) 0%, var(--patch-bg2) 100%);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.patch-knob:hover .patch-knob__ring,
+.patch-knob:focus-visible .patch-knob__ring {
+  border-color: var(--patch-dim);
+  box-shadow: 0 0 12px var(--patch-accent-glow);
+}
+.patch-knob--dragging .patch-knob__ring {
+  border-color: var(--patch-accent);
+  box-shadow: 0 0 20px var(--patch-accent-glow);
+}
+
+.patch-knob__track {
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+}
+.patch-knob__bg-arc {
+  fill: none;
+  stroke: var(--patch-border2);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.patch-knob__active-arc {
+  fill: none;
+  stroke: var(--patch-accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px var(--patch-accent-glow));
+}
+
+.patch-knob__indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 14px;
+  background: var(--patch-bright);
+  border-radius: 1px;
+  transform-origin: bottom center;
+  pointer-events: none;
+}
+.patch-knob__indicator::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--patch-white);
+}
+
+/* ════════════════════════
+   Toggle
+   ════════════════════════ */
+
+.patch-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.patch-toggles-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 6px;
+}
+
+.patch-toggle {
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--patch-border2);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  padding: 0;
+  border: none;
+}
+.patch-toggle--on,
+.patch-toggle[aria-checked="true"] {
+  background: var(--patch-accent);
+}
+.patch-toggle:focus-visible {
+  outline: 2px solid var(--patch-focus);
+  outline-offset: 2px;
+}
+.patch-toggle__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--patch-white);
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  pointer-events: none;
+}
+.patch-toggle--on .patch-toggle__thumb,
+.patch-toggle[aria-checked="true"] .patch-toggle__thumb {
+  transform: translateX(16px);
+}
+
+.patch-toggle-label {
+  font-size: 10px;
+  color: var(--patch-dim);
+  letter-spacing: 0.03em;
+}
+
+/* ════════════════════════
+   Color Well
+   ════════════════════════ */
+
+.patch-color-well {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 2px solid var(--patch-border2);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.patch-color-well:hover,
+.patch-color-well:focus-within {
+  border-color: var(--patch-dim);
+}
+.patch-color-well input[type="color"] {
+  position: absolute;
+  inset: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+/* ════════════════════════
+   Morph Slider
+   ════════════════════════ */
+
+.patch-morph-section {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--patch-border);
+}
+.patch-morph-label {
+  font-size: 10px;
+  color: var(--patch-dim);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.patch-morph-value {
+  color: var(--patch-bright);
+}
+
+.patch-morph-track {
+  width: 100%;
+  height: 24px;
+  background: transparent;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+}
+.patch-morph-track:focus-visible {
+  outline: 2px solid var(--patch-focus);
+  outline-offset: 2px;
+}
+.patch-morph-track__bg {
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 6px;
+  background: var(--patch-border);
+  border-radius: 3px;
+  pointer-events: none;
+}
+.patch-morph-track__fill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--patch-accent), var(--patch-cyan));
+  transition: width 0.15s ease;
+  pointer-events: none;
+}
+.patch-morph-track__thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--patch-white);
+  border: 2px solid var(--patch-accent);
+  pointer-events: none;
+  transition: left 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+
+/* ════════════════════════
+   Select / Text Input
+   ════════════════════════ */
+
+.patch-select-group,
+.patch-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.patch-select,
+.patch-text-input {
+  font-family: inherit;
+  font-size: 11px;
+  padding: 6px 10px;
+  background: var(--patch-bg2);
+  border: 1px solid var(--patch-border);
+  border-radius: 4px;
+  color: var(--patch-bright);
+  transition: border-color 0.2s;
+}
+.patch-select:focus,
+.patch-text-input:focus {
+  border-color: var(--patch-accent);
+  outline: none;
+}
+
+/* ════════════════════════
+   Action Button
+   ════════════════════════ */
+
+.patch-action-btn {
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 6px 14px;
+  border: 1px solid var(--patch-accent-dim);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--patch-accent);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.patch-action-btn:hover {
+  background: var(--patch-accent);
+  color: var(--patch-bg);
+}
+
+/* ════════════════════════
+   Status Bar
+   ════════════════════════ */
+
+.patch-panel__status {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--patch-border);
+  font-size: 10px;
+  color: var(--patch-dim);
+  flex-shrink: 0;
+}
+
+.patch-copy-btn {
+  font-family: inherit;
+  font-size: 10px;
+  color: var(--patch-accent-dim);
+  background: transparent;
+  border: 1px solid var(--patch-border);
+  border-radius: 4px;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.patch-copy-btn:hover,
+.patch-copy-btn:focus-visible {
+  background: var(--patch-accent);
+  color: var(--patch-bg);
+  border-color: var(--patch-accent);
+}
+
+/* ════════════════════════
+   Spring Placeholder
+   ════════════════════════ */
+
+.patch-spring-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border: 1px dashed var(--patch-border);
+  border-radius: 6px;
+}
