@@ -826,14 +826,15 @@ h2.section-title,
 
 /* ═══ VU METER (decorative) ═══ */
 .vu-mini {
-  display: flex;
+  display: inline-flex;
   gap: 2px;
   align-items: flex-end;
   height: 12px;
-  margin-left: 6px;
+  margin-left: 2px;
+  vertical-align: middle;
 }
 .vu-b {
-  width: 2px;
+  width: 2.5px;
   background: var(--green);
   border-radius: 1px;
   opacity: .6;
@@ -1286,13 +1287,6 @@ h2.section-title,
         <div class="patch-title">
           <span class="led" aria-hidden="true"></span>
           PATCH
-          <span class="vu-mini" id="vuMini" aria-hidden="true">
-            <span class="vu-b" style="height:4px"></span>
-            <span class="vu-b" style="height:7px"></span>
-            <span class="vu-b" style="height:10px"></span>
-            <span class="vu-b" style="height:6px"></span>
-            <span class="vu-b" style="height:3px"></span>
-          </span>
         </div>
         <div class="patch-scenes" role="group" aria-label="Scene presets">
           <button class="scene-btn" aria-pressed="true" data-scene="default" type="button">DEFAULT</button>
